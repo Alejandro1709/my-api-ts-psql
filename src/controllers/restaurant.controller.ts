@@ -11,7 +11,7 @@ const pool = new Pool({
 
 const handleGetRestaurants = async (req: Request, res: Response) => {
   const response = await pool.query('SELECT * FROM restaurants');
-  console.log(response);
+  res.status(200).json(response.rows);
 };
 
 export { handleGetRestaurants };
