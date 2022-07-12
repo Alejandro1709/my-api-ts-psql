@@ -1,7 +1,12 @@
 import { Router } from 'express';
-import { handleGetRestaurants } from '../controllers/restaurant.controller';
+import {
+  handleGetRestaurants,
+  handleGetSingleRestaurant,
+} from '../controllers/restaurant.controller';
 const router = Router();
 
 router.get('/', handleGetRestaurants);
+
+router.get('/:id', handleGetSingleRestaurant);
 
 export default router;

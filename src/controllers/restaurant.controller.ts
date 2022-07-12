@@ -14,6 +14,12 @@ const handleGetRestaurants = async (req: Request, res: Response) => {
   res.status(200).json(response.rows);
 };
 
-const handleGetSingleRestaurant = async (req: Request, res: Response) => {};
+const handleGetSingleRestaurant = async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const response = await pool.query(
+    `SELECT * FROM restaurants WHERE id = ${id}`
+  );
+  res.status(200).json(response.rows[0]);
+};
 
 export { handleGetRestaurants, handleGetSingleRestaurant };
