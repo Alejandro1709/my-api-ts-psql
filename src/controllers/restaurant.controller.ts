@@ -11,7 +11,11 @@ const pool = new Pool({
 
 const handleGetRestaurants = async (req: Request, res: Response) => {
   const response = await pool.query('SELECT * FROM restaurants');
-  res.status(200).json(response.rows);
+  res.status(200).json({
+    status: 'Success',
+    results: response.rowCount,
+    data: response.rows,
+  });
 };
 
 const handleGetSingleRestaurant = async (req: Request, res: Response) => {
@@ -19,7 +23,11 @@ const handleGetSingleRestaurant = async (req: Request, res: Response) => {
   const response = await pool.query(
     `SELECT * FROM restaurants WHERE id = ${id}`
   );
-  res.status(200).json(response.rows[0]);
+  res.status(200).json({
+    status: 'Success',
+    results: response.rowCount,
+    data: response.rows[0],
+  });
 };
 
 export { handleGetRestaurants, handleGetSingleRestaurant };
