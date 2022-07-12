@@ -20,5 +20,23 @@
         </ul>
       </div>
     </header>
+    <main class="app container-lg">
+      <section class="section-md">
+        <h1 class="heading-xl mb-3">Restaurants in Lima, Peru.</h1>
+        <div class="cards">
+          <% restaurants.forEach(function(restaurant){ %>
+          <a
+            class="text-decoration-none text-black"
+            href="/restaurants/<%= restaurant.id %>"
+          >
+            <div class="card">
+              <h2><%= restaurant.name %></h2>
+              <p><%= restaurant.address %></p>
+            </div>
+          </a>
+          <% }); %>
+        </div>
+      </section>
+    </main>
   </body>
 </html>

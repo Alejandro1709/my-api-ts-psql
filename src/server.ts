@@ -1,5 +1,7 @@
 import express, { Request, Response } from 'express';
+import { Pool } from 'pg';
 import restaurantRoutes from './routes/restaurant.routes';
+import Restaurant from './types/restaurant';
 import path from 'path';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
@@ -7,6 +9,14 @@ import dotenv from 'dotenv';
 const app = express();
 
 dotenv.config();
+
+const pool = new Pool({
+  host: 'localhost',
+  user: 'postgres',
+  password: '',
+  database: 'myadvisor',
+  port: 5432,
+});
 
 // Middlewares
 app.use(express.json());
@@ -19,8 +29,11 @@ app.use(morgan('dev'));
 // Routes
 app.use('/api/v1/restaurants', restaurantRoutes);
 
-app.get('/', (req: Request, res: Response) => {
-  res.render('index');
+app.get('/', async (req: Request, res: Response) => {
+  const response = await pool.query('SELECT * FROM restaurants');
+  const restaurants: Array<Restaurant> = response.rows;
+
+  res.render('index', { restaurants });
 });
 
 const port = process.env.PORT || 3030;
