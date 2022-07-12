@@ -30,4 +30,10 @@ const handleGetSingleRestaurant = async (req: Request, res: Response) => {
   });
 };
 
-export { handleGetRestaurants, handleGetSingleRestaurant };
+const handleUpdateRestaurant = async (req: Request, res: Response) => {};
+
+export {
+  handleGetRestaurants,
+  handleGetSingleRestaurant,
+  handleUpdateRestaurant,
+};
