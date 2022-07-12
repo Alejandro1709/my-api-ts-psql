@@ -46,6 +46,10 @@ app.get('/restaurants/:id', async (req: Request, res: Response) => {
   res.render('show', { restaurant });
 });
 
+app.get('/new-restaurant', (req: Request, res: Response) => {
+  res.render('new');
+});
+
 const port = process.env.PORT || 3030;
 
 app.listen(port, () => console.log(`Server is up and running on port ${port}`));

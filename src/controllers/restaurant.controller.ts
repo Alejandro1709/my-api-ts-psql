@@ -50,14 +50,15 @@ const handleCreateRestaurant = async (req: Request, res: Response) => {
   );
   const restaurant: Restaurant = response.rows[0];
 
-  handleSendRequest(
-    req,
-    res,
-    201,
-    'Success',
-    'Restaurant Created!',
-    restaurant
-  );
+  res.redirect('/');
+  // handleSendRequest(
+  //   req,
+  //   res,
+  //   201,
+  //   'Success',
+  //   'Restaurant Created!',
+  //   restaurant
+  // );
 };
 
 const handleUpdateRestaurant = async (req: Request, res: Response) => {
