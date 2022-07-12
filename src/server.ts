@@ -36,6 +36,16 @@ app.get('/', async (req: Request, res: Response) => {
   res.render('index', { restaurants });
 });
 
+app.get('/restaurants/:id', async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const response = await pool.query('SELECT * FROM restaurants WHERE id = $1', [
+    id,
+  ]);
+  const restaurant: Array<Restaurant> = response.rows[0];
+
+  res.render('show', { restaurant });
+});
+
 const port = process.env.PORT || 3030;
 
 app.listen(port, () => console.log(`Server is up and running on port ${port}`));

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/styles.css" />
-    <title>Home</title>
+    <title><%= restaurant.name %></title>
   </head>
   <body>
     <header class="header">
@@ -22,19 +22,16 @@
     </header>
     <main class="app container-lg">
       <section class="section-md">
-        <h1 class="heading-xl mb-3">Restaurants in Lima, Peru.</h1>
-        <div class="cards">
-          <% restaurants.forEach(function(restaurant){ %>
-          <a
-            class="text-decoration-none text-black"
-            href="/restaurants/<%= restaurant.id %>"
-          >
-            <div class="card">
-              <h2><%= restaurant.name %></h2>
-              <p><%= restaurant.address %></p>
-            </div>
-          </a>
-          <% }); %>
+        <div class="heading mb-3">
+          <a class="button" href="/">Go Back</a>
+          <h1 class="heading-xl"><%= restaurant.name %></h1>
+        </div>
+        <p>Address: <%= restaurant.address %></p>
+        <p>Website: <%= restaurant.website %></p>
+        <br />
+        <div class="controls">
+          <button>Edit</button>
+          <button>Delete</button>
         </div>
       </section>
     </main>
