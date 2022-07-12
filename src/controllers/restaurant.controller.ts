@@ -71,14 +71,15 @@ const handleUpdateRestaurant = async (req: Request, res: Response) => {
   );
   const restaurant: Restaurant = response.rows[0];
 
-  handleSendRequest(
-    req,
-    res,
-    200,
-    'Success',
-    'Restaurant Updated!',
-    restaurant
-  );
+  res.redirect('/');
+  // handleSendRequest(
+  //   req,
+  //   res,
+  //   200,
+  //   'Success',
+  //   'Restaurant Updated!',
+  //   restaurant
+  // );
 };
 
 const handleDeleteRestaurant = async (req: Request, res: Response) => {
@@ -88,14 +89,15 @@ const handleDeleteRestaurant = async (req: Request, res: Response) => {
   ]);
   const restaurant: Restaurant = response.rows[0];
 
-  handleSendRequest(
-    req,
-    res,
-    200,
-    'Success',
-    'Restaurant Deleted!',
-    restaurant
-  );
+  res.redirect('/');
+  // handleSendRequest(
+  //   req,
+  //   res,
+  //   200,
+  //   'Success',
+  //   'Restaurant Deleted!',
+  //   restaurant
+  // );
 };
 
 const handleSendRequest = (

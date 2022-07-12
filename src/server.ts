@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import { Pool } from 'pg';
 import restaurantRoutes from './routes/restaurant.routes';
+import methodOverride from 'method-override';
 import Restaurant from './types/restaurant';
 import path from 'path';
 import morgan from 'morgan';
@@ -21,6 +22,7 @@ const pool = new Pool({
 // Middlewares
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 app.use(express.urlencoded({ extended: false }));
@@ -48,6 +50,16 @@ app.get('/restaurants/:id', async (req: Request, res: Response) => {
 
 app.get('/new-restaurant', (req: Request, res: Response) => {
   res.render('new');
+});
+
+app.get('/restaurants/:id/edit', async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const response = await pool.query('SELECT * FROM restaurants WHERE id = $1', [
+    id,
+  ]);
+  const restaurant: Array<Restaurant> = response.rows[0];
+
+  res.render('edit', { restaurant });
 });
 
 const port = process.env.PORT || 3030;

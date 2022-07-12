@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Edit Restaurant</title>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__navbar container-lg">
+        <h2>Advisor</h2>
+        <ul class="list-style-none">
+          <li>
+            <a class="text-decoration-none text-black" href="/new-restaurant"
+              >New Restaurant</a
+            >
+          </li>
+        </ul>
+      </div>
+    </header>
+    <main class="app container-lg">
+      <section class="section-md">
+        <div class="heading mb-3">
+          <a class="button" href="/">Go Back</a>
+          <h1 class="heading-xl">Edit Restaurant</h1>
+        </div>
+        <form
+          class="container-lg"
+          action="/api/v1/restaurants/<%= restaurant.id %>?_method=PATCH"
+          method="POST"
+        >
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              value="<%= restaurant.name %>"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="address">Address:</label>
+            <input
+              type="text"
+              name="address"
+              id="address"
+              value="<%= restaurant.address %>"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="name">Website:</label>
+            <input
+              type="text"
+              name="website"
+              id="website"
+              value="<%= restaurant.website %>"
+              required
+            />
+          </div>
+          <button type="submit">Update Restaurant</button>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

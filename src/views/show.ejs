@@ -30,8 +30,13 @@
         <p>Website: <%= restaurant.website %></p>
         <br />
         <div class="controls">
-          <button>Edit</button>
-          <button>Delete</button>
+          <a href="/restaurants/<%= restaurant.id %>/edit">Edit</a>
+          <form
+            action="/api/v1/restaurants/<%= restaurant.id %>?_method=DELETE"
+            method="POST"
+          >
+            <button type="submit">Delete</button>
+          </form>
         </div>
       </section>
     </main>
