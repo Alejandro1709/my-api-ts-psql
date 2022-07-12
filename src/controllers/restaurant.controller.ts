@@ -44,7 +44,21 @@ const handleCreateRestaurant = async (req: Request, res: Response) => {
   });
 };
 
-const handleUpdateRestaurant = async (req: Request, res: Response) => {};
+const handleUpdateRestaurant = async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const { name, address, website } = req.body;
+
+  const response = await pool.query(
+    'UPDATE restaurants SET name = $1, address = $2, website = $3 WHERE id = $4 RETURNING *',
+    [name, address, website, id]
+  );
+
+  res.status(200).json({
+    status: 'Success',
+    message: 'Restaurant Updated!',
+    data: response.rows[0],
+  });
+};
 
 export {
   handleGetRestaurants,
