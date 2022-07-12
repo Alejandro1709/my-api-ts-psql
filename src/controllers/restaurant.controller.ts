@@ -20,9 +20,9 @@ const handleGetRestaurants = async (req: Request, res: Response) => {
 
 const handleGetSingleRestaurant = async (req: Request, res: Response) => {
   const id = req.params.id;
-  const response = await pool.query(
-    `SELECT * FROM restaurants WHERE id = ${id}`
-  );
+  const response = await pool.query('SELECT * FROM restaurants WHERE id = $1', [
+    id,
+  ]);
   res.status(200).json({
     status: 'Success',
     results: response.rowCount,
