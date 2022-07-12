@@ -30,7 +30,19 @@ const handleGetSingleRestaurant = async (req: Request, res: Response) => {
   });
 };
 
-const handleCreateRestaurant = async (req: Request, res: Response) => {};
+const handleCreateRestaurant = async (req: Request, res: Response) => {
+  const { name, address, website } = req.body;
+
+  const response = await pool.query(
+    'INSERT INTO restaurants (name, address, website) VALUES ($1, $2, $3) RETURNING *',
+    [name, address, website]
+  );
+  res.status(201).json({
+    status: 'Success',
+    message: 'Restaurant Created!',
+    data: response.rows[0],
+  });
+};
 
 const handleUpdateRestaurant = async (req: Request, res: Response) => {};
 

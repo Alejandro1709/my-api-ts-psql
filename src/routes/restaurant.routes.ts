@@ -2,10 +2,11 @@ import { Router } from 'express';
 import {
   handleGetRestaurants,
   handleGetSingleRestaurant,
+  handleCreateRestaurant,
 } from '../controllers/restaurant.controller';
 const router = Router();
 
-router.get('/', handleGetRestaurants);
+router.route('/').get(handleGetRestaurants).post(handleCreateRestaurant);
 
 router.get('/:id', handleGetSingleRestaurant);
 
