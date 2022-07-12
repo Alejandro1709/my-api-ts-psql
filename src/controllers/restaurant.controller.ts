@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Pool } from 'pg';
+import Restaurant from '../types/restaurant';
 
 const pool = new Pool({
   host: 'localhost',
@@ -11,11 +12,16 @@ const pool = new Pool({
 
 const handleGetRestaurants = async (req: Request, res: Response) => {
   const response = await pool.query('SELECT * FROM restaurants');
-  res.status(200).json({
-    status: 'Success',
-    results: response.rowCount,
-    data: response.rows,
-  });
+  const restaurants: Array<Restaurant> = response.rows;
+
+  handleSendRequest(
+    req,
+    res,
+    200,
+    'Success',
+    `results: ${response.rowCount}`,
+    restaurants
+  );
 };
 
 const handleGetSingleRestaurant = async (req: Request, res: Response) => {
@@ -23,11 +29,16 @@ const handleGetSingleRestaurant = async (req: Request, res: Response) => {
   const response = await pool.query('SELECT * FROM restaurants WHERE id = $1', [
     id,
   ]);
-  res.status(200).json({
-    status: 'Success',
-    results: response.rowCount,
-    data: response.rows[0],
-  });
+  const restaurant: Restaurant = response.rows[0];
+
+  handleSendRequest(
+    req,
+    res,
+    200,
+    'Success',
+    `results: ${response.rowCount}`,
+    restaurant
+  );
 };
 
 const handleCreateRestaurant = async (req: Request, res: Response) => {
@@ -37,11 +48,16 @@ const handleCreateRestaurant = async (req: Request, res: Response) => {
     'INSERT INTO restaurants (name, address, website) VALUES ($1, $2, $3) RETURNING *',
     [name, address, website]
   );
-  res.status(201).json({
-    status: 'Success',
-    message: 'Restaurant Created!',
-    data: response.rows[0],
-  });
+  const restaurant: Restaurant = response.rows[0];
+
+  handleSendRequest(
+    req,
+    res,
+    201,
+    'Success',
+    'Restaurant Created!',
+    restaurant
+  );
 };
 
 const handleUpdateRestaurant = async (req: Request, res: Response) => {
@@ -52,12 +68,16 @@ const handleUpdateRestaurant = async (req: Request, res: Response) => {
     'UPDATE restaurants SET name = $1, address = $2, website = $3 WHERE id = $4 RETURNING *',
     [name, address, website, id]
   );
+  const restaurant: Restaurant = response.rows[0];
 
-  res.status(200).json({
-    status: 'Success',
-    message: 'Restaurant Updated!',
-    data: response.rows[0],
-  });
+  handleSendRequest(
+    req,
+    res,
+    200,
+    'Success',
+    'Restaurant Updated!',
+    restaurant
+  );
 };
 
 const handleDeleteRestaurant = async (req: Request, res: Response) => {
@@ -65,10 +85,30 @@ const handleDeleteRestaurant = async (req: Request, res: Response) => {
   const response = await pool.query('DELETE FROM restaurants WHERE id = $1', [
     id,
   ]);
-  res.status(200).json({
-    status: 'Success',
-    message: 'Restaurant Deleted!',
-    data: response.rows[0],
+  const restaurant: Restaurant = response.rows[0];
+
+  handleSendRequest(
+    req,
+    res,
+    200,
+    'Success',
+    'Restaurant Deleted!',
+    restaurant
+  );
+};
+
+const handleSendRequest = (
+  req: Request,
+  res: Response,
+  code: number,
+  status: string,
+  message: string | number,
+  data?: any
+) => {
+  res.status(code).json({
+    status,
+    message,
+    data,
   });
 };
 
