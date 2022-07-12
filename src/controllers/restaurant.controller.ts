@@ -30,10 +30,13 @@ const handleGetSingleRestaurant = async (req: Request, res: Response) => {
   });
 };
 
+const handleCreateRestaurant = async (req: Request, res: Response) => {};
+
 const handleUpdateRestaurant = async (req: Request, res: Response) => {};
 
 export {
   handleGetRestaurants,
   handleGetSingleRestaurant,
+  handleCreateRestaurant,
   handleUpdateRestaurant,
 };
