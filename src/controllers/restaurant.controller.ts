@@ -60,9 +60,22 @@ const handleUpdateRestaurant = async (req: Request, res: Response) => {
   });
 };
 
+const handleDeleteRestaurant = async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const response = await pool.query('DELETE FROM restaurants WHERE id = $1', [
+    id,
+  ]);
+  res.status(200).json({
+    status: 'Success',
+    message: 'Restaurant Deleted!',
+    data: response.rows[0],
+  });
+};
+
 export {
   handleGetRestaurants,
   handleGetSingleRestaurant,
   handleCreateRestaurant,
   handleUpdateRestaurant,
+  handleDeleteRestaurant,
 };
