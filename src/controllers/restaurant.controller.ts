@@ -13,11 +13,15 @@ const pool = new Pool({
 const handleGetRestaurants = async (req: Request, res: Response) => {
   const response = await pool.query('SELECT * FROM restaurants');
   const restaurants: Array<Restaurant> = response.rows;
-  res.status(200).json({
-    status: 'Success',
-    results: response.rowCount,
-    data: restaurants,
-  });
+
+  handleSendRequest(
+    req,
+    res,
+    200,
+    'Success',
+    `results: ${response.rowCount}`,
+    restaurants
+  );
 };
 
 const handleGetSingleRestaurant = async (req: Request, res: Response) => {
@@ -26,11 +30,15 @@ const handleGetSingleRestaurant = async (req: Request, res: Response) => {
     id,
   ]);
   const restaurant: Restaurant = response.rows[0];
-  res.status(200).json({
-    status: 'Success',
-    results: response.rowCount,
-    data: restaurant,
-  });
+
+  handleSendRequest(
+    req,
+    res,
+    200,
+    'Success',
+    `results: ${response.rowCount}`,
+    restaurant
+  );
 };
 
 const handleCreateRestaurant = async (req: Request, res: Response) => {
@@ -41,11 +49,15 @@ const handleCreateRestaurant = async (req: Request, res: Response) => {
     [name, address, website]
   );
   const restaurant: Restaurant = response.rows[0];
-  res.status(201).json({
-    status: 'Success',
-    message: 'Restaurant Created!',
-    data: restaurant,
-  });
+
+  handleSendRequest(
+    req,
+    res,
+    201,
+    'Success',
+    'Restaurant Created!',
+    restaurant
+  );
 };
 
 const handleUpdateRestaurant = async (req: Request, res: Response) => {
@@ -57,11 +69,15 @@ const handleUpdateRestaurant = async (req: Request, res: Response) => {
     [name, address, website, id]
   );
   const restaurant: Restaurant = response.rows[0];
-  res.status(200).json({
-    status: 'Success',
-    message: 'Restaurant Updated!',
-    data: restaurant,
-  });
+
+  handleSendRequest(
+    req,
+    res,
+    200,
+    'Success',
+    'Restaurant Updated!',
+    restaurant
+  );
 };
 
 const handleDeleteRestaurant = async (req: Request, res: Response) => {
@@ -70,10 +86,29 @@ const handleDeleteRestaurant = async (req: Request, res: Response) => {
     id,
   ]);
   const restaurant: Restaurant = response.rows[0];
-  res.status(200).json({
-    status: 'Success',
-    message: 'Restaurant Deleted!',
-    data: restaurant,
+
+  handleSendRequest(
+    req,
+    res,
+    200,
+    'Success',
+    'Restaurant Deleted!',
+    restaurant
+  );
+};
+
+const handleSendRequest = (
+  req: Request,
+  res: Response,
+  code: number,
+  status: string,
+  message: string | number,
+  data?: any
+) => {
+  res.status(code).json({
+    status,
+    message,
+    data,
   });
 };
 
