@@ -16,4 +16,6 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello API');
 });
 
-app.listen(3030, () => console.log('Server is up and running on port 3030'));
+const port = process.env.PORT || 3030;
+
+app.listen(port, () => console.log('Server is up and running on port 3030'));
